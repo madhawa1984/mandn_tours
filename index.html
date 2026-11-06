@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- Mobile App Standalone PWA Meta Tags -->
+    <!-- PWA & Mobile Standalone Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MNR Tours">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#006699">
+    <meta name="application-name" content="MNR Travel & Tours">
+
+    <!-- Embedded Web App Manifest Link -->
+    <link rel="manifest" id="manifestLink">
+
     <title>MNR Travel & Tours</title>
 
     <!-- Tailwind CSS CDN -->
@@ -49,6 +55,16 @@
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             overflow-x: hidden;
+            -webkit-touch-callout: none;
+            overscroll-behavior-y: none;
+        }
+
+        /* Safe area support for iOS notches & home bars */
+        .header-safe {
+            padding-top: max(1rem, env(safe-area-inset-top));
+        }
+        .bottom-nav-safe {
+            padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
         }
 
         .custom-scrollbar::-webkit-scrollbar {
@@ -65,9 +81,9 @@
 
         /* Glassmorphism Effect */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
         }
 
         .glass-card {
@@ -168,13 +184,36 @@
         </travelData>
     </script>
 
+    <!-- MOBILE PWA INSTALL PROMPT BANNER -->
+    <div id="pwaInstallBanner" class="hidden sticky top-0 z-50 bg-gradient-to-r from-emerald-800 to-ocean-900 text-white p-3 px-4 shadow-xl border-b border-emerald-400/30">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-xl text-emerald-300">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-white">Install MNR Tours App</h4>
+                    <p id="pwaInstallSubtext" class="text-[11px] text-ocean-100">Hide address bar &amp; access offline!</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="pwaInstallBtn" onclick="triggerPwaInstall()" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-md transition-colors">
+                    Install App
+                </button>
+                <button onclick="dismissPwaBanner()" class="text-white/70 hover:text-white p-1.5">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- TOP HEADER / APP BAR -->
-    <header class="sticky top-0 z-40 bg-gradient-to-r from-ocean-700 via-ocean-500 to-emerald-700 text-white shadow-md">
+    <header class="sticky top-0 z-40 bg-gradient-to-r from-ocean-700 via-ocean-500 to-emerald-700 text-white shadow-md header-safe">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <!-- Brand Logo -->
             <div onclick="switchTab('home')" class="flex items-center gap-2 cursor-pointer group">
                 <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-xl shadow-inner group-hover:scale-105 transition-transform">
-                    <i class="fa-solid font-bold fa-compass text-emerald-400"></i>
+                    <i class="fa-solid fa-compass text-emerald-400"></i>
                 </div>
                 <div>
                     <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-1.5">
@@ -208,7 +247,7 @@
     </header>
 
     <!-- MAIN APP CONTAINER -->
-    <main class="flex-1 max-w-7xl w-full mx-auto pb-20 md:pb-10 pt-0 px-0 sm:px-4 lg:px-8">
+    <main class="flex-1 max-w-7xl w-full mx-auto pb-24 md:pb-10 pt-0 px-0 sm:px-4 lg:px-8">
         
         <!-- HOME / PACKAGES VIEW -->
         <section id="view-home" class="page-view space-y-6">
@@ -223,13 +262,13 @@
 
                 <div class="relative z-10 max-w-2xl text-center sm:text-left">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 backdrop-blur-sm mb-3">
-                        <i class="fa-solid fa-sparkles"></i> Handcrafted Eco-Adventures
+                        <i class="fa-solid fa-sparkles"></i> PWA Standalone Enabled
                     </span>
                     <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                         Explore Sri Lanka's Emerald Peaks & Deep Ocean Blue
                     </h2>
                     <p class="mt-2 text-sm sm:text-base text-ocean-100 font-normal">
-                        Select from our XML-curated premium tour packages. Native mobile booking experience tailored for all devices.
+                        Select from our XML-curated premium tour packages. Native app experience without url bar interruptions.
                     </p>
                 </div>
 
@@ -248,7 +287,7 @@
                 </div>
             </div>
 
-            <!-- PACKAGES GRID CONTAINER (Populated via JS DOMParser) -->
+            <!-- PACKAGES GRID CONTAINER -->
             <div class="px-4 sm:px-0">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
@@ -261,7 +300,7 @@
 
                 <!-- Grid View -->
                 <div id="packagesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Dynamic Cards will be rendered here from XML -->
+                    <!-- Dynamic Cards rendered from XML -->
                 </div>
             </div>
         </section>
@@ -324,8 +363,8 @@
         </section>
     </main>
 
-    <!-- MOBILE BOTTOM NAVIGATION TAB BAR (App-Like UI) -->
-    <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 glass-nav border-t border-slate-200/80 px-4 py-2 shadow-lg">
+    <!-- MOBILE BOTTOM NAVIGATION TAB BAR (Native Mobile App Layout) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 glass-nav border-t border-slate-200/80 px-4 py-2 shadow-lg bottom-nav-safe">
         <div class="flex items-center justify-around max-w-md mx-auto">
             <button onclick="switchTab('home')" id="mob-nav-home" class="flex flex-col items-center gap-1 text-ocean-700 transition-colors">
                 <i class="fa-solid fa-compass text-lg"></i>
@@ -350,7 +389,7 @@
 
     <!-- PACKAGE DETAIL MODAL -->
     <div id="packageModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity">
-        <div class="bg-white w-full sm:max-w-2xl rounded-t-3xl sm:rounded-3xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-300">
+        <div class="bg-white w-full sm:max-w-2xl rounded-t-3xl sm:rounded-3xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
             <!-- Modal Header / Image Header -->
             <div class="relative h-48 sm:h-64 w-full bg-slate-800">
                 <img id="modalImg" src="" alt="Package" class="w-full h-full object-cover">
@@ -461,26 +500,121 @@
     </div>
 
     <!-- NOTIFICATION TOAST -->
-    <div id="toast" class="fixed top-20 right-4 z-50 hidden bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 transition-all duration-300 transform translate-y-[-10px]">
+    <div id="toast" class="fixed top-20 right-4 z-50 hidden bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 transition-all duration-300">
         <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
         <span id="toastMsg" class="text-xs font-semibold"></span>
     </div>
 
-    <!-- JAVASCRIPT: XML PARSING, ROUTING & INTERACTION LOGIC -->
+    <!-- JAVASCRIPT: PWA ENGINE, XML PARSER & ROUTING -->
     <script>
-        // Global State storing parsed XML packages
+        // 1. INLINE PWA MANIFEST & SERVICE WORKER GENERATION
+        (function setupPwa() {
+            const manifestData = {
+                name: "MNR Travel & Tours",
+                short_name: "MNR Tours",
+                description: "Luxury Ocean & Greenery Escapes in Sri Lanka",
+                start_url: "./index.html",
+                display: "standalone",
+                background_color: "#006699",
+                theme_color: "#006699",
+                orientation: "portrait-primary",
+                icons: [
+                    {
+                        src: "https://cdn-icons-png.flaticon.com/512/201/201623.png",
+                        sizes: "192x192",
+                        type: "image/png"
+                    },
+                    {
+                        src: "https://cdn-icons-png.flaticon.com/512/201/201623.png",
+                        sizes: "512x512",
+                        type: "image/png"
+                    }
+                ]
+            };
+            const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+            document.getElementById('manifestLink').setAttribute('href', URL.createObjectURL(manifestBlob));
+
+            // Register dummy Service Worker for PWA compliance
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    const CACHE_NAME = 'mnr-tours-v1';
+                    self.addEventListener('install', (e) => {
+                        self.skipWaiting();
+                    });
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+                    });
+                `;
+                const swBlob = new Blob([swCode], { type: 'application/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(console.error);
+            }
+        })();
+
+        // Global App State
         let packagesData = [];
         let selectedPackageForModal = null;
         let activeCategoryFilter = 'all';
+        let deferredPwaPrompt = null;
 
-        // Initialize App on DOM Load
+        // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
             parseXMLData();
             renderPackages();
             populateBookingDropdown();
+            checkPwaInstallationState();
         });
 
-        // 1. XML DOM PARSER LOGIC
+        // 2. PWA INSTALL PROMPT DETECTION & HANDLERS
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPwaPrompt = e;
+            showPwaInstallBanner("android");
+        });
+
+        function checkPwaInstallationState() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+            if (isStandalone) {
+                // Application is already launched in address-bar-free standalone mode!
+                dismissPwaBanner();
+            } else if (isIOS) {
+                showPwaInstallBanner("ios");
+            }
+        }
+
+        function showPwaInstallBanner(platform) {
+            const banner = document.getElementById('pwaInstallBanner');
+            const subtext = document.getElementById('pwaInstallSubtext');
+            const btn = document.getElementById('pwaInstallBtn');
+
+            if (platform === "ios") {
+                subtext.innerHTML = 'Tap Share <i class="fa-solid fa-arrow-up-from-bracket"></i> then <b>Add to Home Screen</b>';
+                btn.style.display = 'none';
+            } else {
+                subtext.innerText = 'Hide address bar & get instant native app experience';
+                btn.style.display = 'inline-block';
+            }
+            banner.classList.remove('hidden');
+        }
+
+        function triggerPwaInstall() {
+            if (deferredPwaPrompt) {
+                deferredPwaPrompt.prompt();
+                deferredPwaPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        dismissPwaBanner();
+                    }
+                    deferredPwaPrompt = null;
+                });
+            }
+        }
+
+        function dismissPwaBanner() {
+            document.getElementById('pwaInstallBanner').classList.add('hidden');
+        }
+
+        // 3. XML DOM PARSER LOGIC
         function parseXMLData() {
             try {
                 const xmlString = document.getElementById('travel-xml').textContent;
@@ -493,7 +627,6 @@
                 for (let i = 0; i < pkgElements.length; i++) {
                     const pkg = pkgElements[i];
                     
-                    // Parse Highlights Sub-nodes
                     const highlightItems = [];
                     const hList = pkg.getElementsByTagName('highlights')[0]?.getElementsByTagName('item');
                     if (hList) {
@@ -520,16 +653,15 @@
                 }
             } catch (err) {
                 console.error("XML Parsing Error:", err);
-                showToast("Failed to parse travel XML data.", "error");
+                showToast("Failed to parse XML package data.", "error");
             }
         }
 
-        // 2. RENDER PACKAGES TO DOM (Card View Structure)
+        // 4. RENDER PACKAGES TO DOM
         function renderPackages() {
             const container = document.getElementById('packagesContainer');
             const searchVal = document.getElementById('searchInput')?.value.toLowerCase() || '';
 
-            // Filter logic
             const filtered = packagesData.filter(pkg => {
                 const matchesCat = activeCategoryFilter === 'all' || pkg.category.toLowerCase().includes(activeCategoryFilter.toLowerCase());
                 const matchesSearch = pkg.title.toLowerCase().includes(searchVal) || pkg.description.toLowerCase().includes(searchVal);
@@ -550,12 +682,10 @@
 
             container.innerHTML = filtered.map(pkg => `
                 <div class="glass-card rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
-                    <!-- Card Media -->
                     <div class="relative h-48 overflow-hidden bg-slate-100">
                         <img src="${pkg.image}" alt="${pkg.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
                         
-                        <!-- Top Badges -->
                         <div class="absolute top-3 left-3 flex gap-2">
                             <span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-emerald-600/90 text-white backdrop-blur-md shadow-sm">
                                 ${pkg.category}
@@ -567,14 +697,12 @@
                             </span>
                         ` : ''}
 
-                        <!-- Price Tag overlay bottom right -->
                         <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-lg text-right">
                             <span class="text-xs text-slate-400 font-semibold block leading-none">Starting</span>
                             <span class="text-lg font-extrabold text-ocean-700">${pkg.currency === 'USD' ? '$' : ''}${pkg.price}</span>
                         </div>
                     </div>
 
-                    <!-- Card Body -->
                     <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
                         <div>
                             <div class="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-1.5">
@@ -590,7 +718,6 @@
                             </p>
                         </div>
 
-                        <!-- Highlights Tags -->
                         <div class="flex flex-wrap gap-1.5 pt-1">
                             ${pkg.highlights.slice(0, 2).map(h => `
                                 <span class="text-[10px] font-medium px-2 py-1 rounded-md bg-slate-100 text-slate-600 flex items-center gap-1">
@@ -599,7 +726,6 @@
                             `).join('')}
                         </div>
 
-                        <!-- Card Actions -->
                         <div class="pt-2 border-t border-slate-100 flex items-center gap-2">
                             <button onclick="openPackageModal('${pkg.id}')" class="flex-1 py-2.5 px-3 rounded-xl border border-ocean-500 text-ocean-700 hover:bg-ocean-50 text-xs font-bold transition-colors flex items-center justify-center gap-1.5">
                                 <span>View Package</span>
@@ -614,16 +740,12 @@
             `).join('');
         }
 
-        // 3. INTERNAL ROUTER LOGIC (Address Bar Unchanged)
+        // 5. INTERNAL ROUTER LOGIC
         function switchTab(tabId) {
-            // Hide all views
             document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden-view'));
-            
-            // Show active view
             const activeView = document.getElementById(`view-${tabId}`);
             if (activeView) activeView.classList.remove('hidden-view');
 
-            // Update Desktop Nav UI
             ['home', 'about', 'contact'].forEach(t => {
                 const dtBtn = document.getElementById(`dt-nav-${t}`);
                 const mobBtn = document.getElementById(`mob-nav-${t}`);
@@ -645,11 +767,10 @@
                 }
             });
 
-            // Scroll to top seamlessly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 4. FILTER HANDLERS
+        // 6. FILTER LOGIC
         function filterPackages() {
             renderPackages();
         }
@@ -666,7 +787,7 @@
             renderPackages();
         }
 
-        // 5. MODALS MANAGEMENT
+        // 7. MODALS LOGIC
         function openPackageModal(pkgId) {
             const pkg = packagesData.find(p => p.id === pkgId);
             if (!pkg) return;
@@ -730,7 +851,7 @@
             e.target.reset();
         }
 
-        // 6. TOAST NOTIFICATION UTILITY
+        // 8. TOAST NOTIFICATION UTILITY
         function showToast(msg, type = "success") {
             const toast = document.getElementById('toast');
             const toastMsg = document.getElementById('toastMsg');
