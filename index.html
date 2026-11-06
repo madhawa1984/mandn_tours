@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- Mobile App Standalone PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#006699">
+    <title>MNR Travel & Tours</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ocean: {
+                            50: '#e0f7fa',
+                            100: '#b2ebf2',
+                            500: '#0099cc',
+                            700: '#006699',
+                            900: '#003366',
+                        },
+                        emerald: {
+                            500: '#198754',
+                            700: '#0f5132',
+                            800: '#2e7d32',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Touch & Native App Scroll Tweaks */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #0099cc;
+            border-radius: 4px;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Animation Keyframes */
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-25%); }
+            100% { transform: translateX(0); }
+        }
+
+        .animate-wave {
+            animation: waveMove 12s ease-in-out infinite;
+        }
+
+        /* Smooth View Transitions */
+        .page-view {
+            transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+        }
+        .page-view.hidden-view {
+            display: none;
+            opacity: 0;
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col text-slate-800 antialiased selection:bg-ocean-500 selection:text-white">
+
+    <!-- Embedded XML Data Structure -->
+    <script id="travel-xml" type="application/xml">
+        <travelData>
+            <company>
+                <name>MNR Travel &amp; Tours</name>
+                <tagline>Discover Paradise with Unmatched Luxury</tagline>
+            </company>
+            <packages>
+                <package id="pkg-1">
+                    <title>Tropical Ella &amp; Hill Country Escapes</title>
+                    <category>Mountain &amp; Lush Greenery</category>
+                    <price currency="USD">450</price>
+                    <duration>4 Days / 3 Nights</duration>
+                    <rating>4.9</rating>
+                    <reviewsCount>128</reviewsCount>
+                    <badge>Best Seller</badge>
+                    <image>https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image>
+                    <description>Ascend into misty mountain peaks, lush emerald tea gardens, and iconic architectural marvels. Experience unforgettable train rides wrapping through scenic Ella hills.</description>
+                    <highlights>
+                        <item>Scenic Train Ride through Ella Gap</item>
+                        <item>Nine Arch Bridge Guided Photo Walk</item>
+                        <item>Private Tea Factory &amp; Plantation Tour</item>
+                        <item>Waterfall Trekking at Ravana Falls</item>
+                        <item>Sunrise Hike to Little Adam's Peak</item>
+                    </highlights>
+                    <included>Luxury Boutique Stays, Breakfast &amp; Dinner, Private AC Transport, English Speaking Guide</included>
+                </package>
+                <package id="pkg-2">
+                    <title>Mirissa Ocean &amp; Blue Whale Safari</title>
+                    <category>Ocean &amp; Beaches</category>
+                    <price currency="USD">620</price>
+                    <duration>5 Days / 4 Nights</duration>
+                    <rating>4.95</rating>
+                    <reviewsCount>210</reviewsCount>
+                    <badge>Popular</badge>
+                    <image>https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image>
+                    <description>Immerse yourself in deep turquoise waters, pristine coconut tree hills, and close encounters with ocean giants on a private luxury catamaran safari.</description>
+                    <highlights>
+                        <item>Deep Sea Blue Whale &amp; Dolphin Safari</item>
+                        <item>Coral Reef Snorkeling with Sea Turtles</item>
+                        <item>Sunset Villa Stay at Coconut Tree Hill</item>
+                        <item>Private Beachside Seafood Barbecue</item>
+                        <item>Paddleboarding in Secret Beach Lagoon</item>
+                    </highlights>
+                    <included>Oceanfront Resort Stay, Private Boat Charter, All Equipment, Daily Seafood Buffet</included>
+                </package>
+                <package id="pkg-3">
+                    <title>Yala Wildlife &amp; Coastal Adventure</title>
+                    <category>Wild Eco Safari</category>
+                    <price currency="USD">780</price>
+                    <duration>6 Days / 5 Nights</duration>
+                    <rating>4.88</rating>
+                    <reviewsCount>94</reviewsCount>
+                    <badge>Featured</badge>
+                    <image>https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image>
+                    <description>Unleash your inner explorer across dense wild jungles and untouched coastal dunes. Spot elusive leopards, wild elephants, and historic Dutch colonial forts.</description>
+                    <highlights>
+                        <item>Exclusive 4x4 Leopard Safari Expedition</item>
+                        <item>Luxury Glamping under Coastal Jungle Stars</item>
+                        <item>Historic Dutch Fort Galle Heritage Walk</item>
+                        <item>Private Lagoon Boat Cruise at Sunrise</item>
+                        <item>Traditional Sri Lankan Cooking Class</item>
+                    </highlights>
+                    <included>Glamping Resort Lodging, All National Park Permits, 4WD Safari Jeeps, All Meals Included</included>
+                </package>
+            </packages>
+        </travelData>
+    </script>
+
+    <!-- TOP HEADER / APP BAR -->
+    <header class="sticky top-0 z-40 bg-gradient-to-r from-ocean-700 via-ocean-500 to-emerald-700 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div onclick="switchTab('home')" class="flex items-center gap-2 cursor-pointer group">
+                <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-xl shadow-inner group-hover:scale-105 transition-transform">
+                    <i class="fa-solid font-bold fa-compass text-emerald-400"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-1.5">
+                        MNR <span class="font-light text-ocean-100 text-sm hidden sm:inline">| Travel & Tours</span>
+                    </h1>
+                    <p class="text-[10px] text-ocean-100 font-medium tracking-wider uppercase">Ocean & Greenery Escapes</p>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-1">
+                <button onclick="switchTab('home')" id="dt-nav-home" class="px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-white/15 text-white shadow-sm">
+                    <i class="fa-solid fa-grid-2 mr-1.5"></i> Packages
+                </button>
+                <button onclick="switchTab('about')" id="dt-nav-about" class="px-4 py-2 rounded-lg text-sm font-semibold transition-all text-white/80 hover:text-white hover:bg-white/10">
+                    <i class="fa-solid fa-leaf mr-1.5"></i> About Us
+                </button>
+                <button onclick="switchTab('contact')" id="dt-nav-contact" class="px-4 py-2 rounded-lg text-sm font-semibold transition-all text-white/80 hover:text-white hover:bg-white/10">
+                    <i class="fa-solid fa-headset mr-1.5"></i> Contact
+                </button>
+            </nav>
+
+            <!-- Quick Action / Status -->
+            <div class="flex items-center gap-3">
+                <button onclick="openBookingModal()" class="bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl shadow-md border border-emerald-400/30 transition-all flex items-center gap-2 active:scale-95">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Book Now</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto pb-20 md:pb-10 pt-0 px-0 sm:px-4 lg:px-8">
+        
+        <!-- HOME / PACKAGES VIEW -->
+        <section id="view-home" class="page-view space-y-6">
+            <!-- HERO WAVE SECTION -->
+            <div class="relative bg-gradient-to-b from-ocean-700 via-ocean-500 to-emerald-800 text-white rounded-b-3xl sm:rounded-3xl shadow-xl overflow-hidden pt-8 pb-14 px-4 sm:px-8">
+                <!-- SVG Animated Sea Waves Background -->
+                <div class="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+                    <svg class="absolute bottom-0 w-[200%] h-32 animate-wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path d="M0,0 C150,90 350,-40 500,50 C650,140 900,10 1200,60 L1200,120 L0,120 Z" fill="#ffffff"></path>
+                    </svg>
+                </div>
+
+                <div class="relative z-10 max-w-2xl text-center sm:text-left">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 backdrop-blur-sm mb-3">
+                        <i class="fa-solid fa-sparkles"></i> Handcrafted Eco-Adventures
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                        Explore Sri Lanka's Emerald Peaks & Deep Ocean Blue
+                    </h2>
+                    <p class="mt-2 text-sm sm:text-base text-ocean-100 font-normal">
+                        Select from our XML-curated premium tour packages. Native mobile booking experience tailored for all devices.
+                    </p>
+                </div>
+
+                <!-- Search & Category Filters -->
+                <div class="mt-6 flex flex-col sm:flex-row gap-3 items-center justify-between">
+                    <div class="relative w-full sm:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="searchInput" oninput="filterPackages()" placeholder="Search tours, wild, beaches..." class="w-full pl-10 pr-4 py-2.5 bg-white/95 text-slate-800 placeholder-slate-400 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 shadow-lg border-0">
+                    </div>
+                    <div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 custom-scrollbar">
+                        <button onclick="setCategoryFilter('all')" class="cat-btn active text-xs font-semibold px-3 py-2 rounded-xl bg-white text-ocean-700 shadow-md transition-all whitespace-nowrap">All Tours</button>
+                        <button onclick="setCategoryFilter('Mountain')" class="cat-btn text-xs font-semibold px-3 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white backdrop-blur-md transition-all whitespace-nowrap">Mountains</button>
+                        <button onclick="setCategoryFilter('Ocean')" class="cat-btn text-xs font-semibold px-3 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white backdrop-blur-md transition-all whitespace-nowrap">Ocean</button>
+                        <button onclick="setCategoryFilter('Safari')" class="cat-btn text-xs font-semibold px-3 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white backdrop-blur-md transition-all whitespace-nowrap">Wildlife</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PACKAGES GRID CONTAINER (Populated via JS DOMParser) -->
+            <div class="px-4 sm:px-0">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-compass text-emerald-700"></i> Featured Packages
+                    </h3>
+                    <span id="packageCountTag" class="text-xs font-semibold text-ocean-700 bg-ocean-50 px-2.5 py-1 rounded-lg border border-ocean-100">
+                        Loading packages...
+                    </span>
+                </div>
+
+                <!-- Grid View -->
+                <div id="packagesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamic Cards will be rendered here from XML -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT VIEW -->
+        <section id="view-about" class="page-view hidden-view px-4 sm:px-0 py-6 space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+                <div class="border-b border-slate-100 pb-4">
+                    <span class="text-xs font-bold text-emerald-700 tracking-wider uppercase">Our Identity</span>
+                    <h2 class="text-2xl font-bold text-slate-800">MNR Travel & Tours</h2>
+                </div>
+                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    At MNR Travel and Tours, we harmonize the twin wonders of tropical nature: lush emerald green tea plantations and deep blue ocean coastal adventures. Our single-page app architecture ensures seamless navigation on any browser without intrusive address bar modifications.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                    <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-100 text-center">
+                        <i class="fa-solid fa-tree-tropical text-3xl text-emerald-700 mb-2"></i>
+                        <h4 class="font-bold text-slate-800 text-sm">100% Eco Safaris</h4>
+                        <p class="text-xs text-slate-500 mt-1">Sustainable treks and wildlife preservation journeys.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-ocean-50 border border-ocean-100 text-center">
+                        <i class="fa-solid fa-water-lower text-3xl text-ocean-700 mb-2"></i>
+                        <h4 class="font-bold text-slate-800 text-sm">Deep Ocean Expeditions</h4>
+                        <p class="text-xs text-slate-500 mt-1">Whale watching & certified snorkeling guides.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-100 text-center">
+                        <i class="fa-solid fa-shield-check text-3xl text-emerald-700 mb-2"></i>
+                        <h4 class="font-bold text-slate-800 text-sm">Verified Guides</h4>
+                        <p class="text-xs text-slate-500 mt-1">Top rated local experts for maximum safety.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT VIEW -->
+        <section id="view-contact" class="page-view hidden-view px-4 sm:px-0 py-6 space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 max-w-2xl mx-auto">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">Get In Touch</h2>
+                <p class="text-slate-500 text-sm mb-6">Have questions about our XML travel packages? Send us a quick inquiry.</p>
+
+                <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Your Name</label>
+                        <input type="text" required placeholder="John Doe" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-ocean-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Email Address</label>
+                        <input type="email" required placeholder="john@example.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-ocean-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Message</label>
+                        <textarea rows="4" required placeholder="Inquire about custom dates or group discounts..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-ocean-500 focus:outline-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-gradient-to-r from-ocean-700 to-emerald-700 text-white text-sm font-semibold rounded-xl shadow-md hover:opacity-95 transition-opacity">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION TAB BAR (App-Like UI) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 glass-nav border-t border-slate-200/80 px-4 py-2 shadow-lg">
+        <div class="flex items-center justify-around max-w-md mx-auto">
+            <button onclick="switchTab('home')" id="mob-nav-home" class="flex flex-col items-center gap-1 text-ocean-700 transition-colors">
+                <i class="fa-solid fa-compass text-lg"></i>
+                <span class="text-[10px] font-medium">Tours</span>
+            </button>
+            <button onclick="switchTab('about')" id="mob-nav-about" class="flex flex-col items-center gap-1 text-slate-400 hover:text-ocean-700 transition-colors">
+                <i class="fa-solid fa-leaf text-lg"></i>
+                <span class="text-[10px] font-medium">About</span>
+            </button>
+            <button onclick="openBookingModal()" class="flex flex-col items-center gap-1 text-slate-400 hover:text-emerald-700 transition-colors">
+                <div class="w-10 h-10 -mt-5 rounded-full bg-gradient-to-r from-emerald-500 to-ocean-500 text-white flex items-center justify-center shadow-lg border-2 border-white">
+                    <i class="fa-solid fa-calendar-check text-sm"></i>
+                </div>
+                <span class="text-[10px] font-medium text-emerald-700">Book</span>
+            </button>
+            <button onclick="switchTab('contact')" id="mob-nav-contact" class="flex flex-col items-center gap-1 text-slate-400 hover:text-ocean-700 transition-colors">
+                <i class="fa-solid fa-headset text-lg"></i>
+                <span class="text-[10px] font-medium">Contact</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- PACKAGE DETAIL MODAL -->
+    <div id="packageModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity">
+        <div class="bg-white w-full sm:max-w-2xl rounded-t-3xl sm:rounded-3xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-300">
+            <!-- Modal Header / Image Header -->
+            <div class="relative h-48 sm:h-64 w-full bg-slate-800">
+                <img id="modalImg" src="" alt="Package" class="w-full h-full object-cover">
+                <button onclick="closeModal('packageModal')" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-md transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                    <span id="modalCategory" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500 text-white shadow-md"></span>
+                    <div id="modalBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-400 text-slate-900 shadow-md"></div>
+                </div>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div class="p-6 overflow-y-auto space-y-4 custom-scrollbar">
+                <div>
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 id="modalTitle" class="text-xl font-bold text-slate-900"></h3>
+                        <div class="text-right">
+                            <span id="modalPrice" class="text-2xl font-extrabold text-ocean-700"></span>
+                            <span class="text-xs text-slate-400 block">per person</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 text-xs font-semibold text-slate-500 mt-2">
+                        <span class="flex items-center gap-1 text-amber-500"><i class="fa-solid fa-star"></i> <span id="modalRating"></span></span>
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-clock text-ocean-500"></i> <span id="modalDuration"></span></span>
+                    </div>
+                </div>
+
+                <p id="modalDesc" class="text-sm text-slate-600 leading-relaxed"></p>
+
+                <!-- Key Highlights -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-sparkles text-emerald-600"></i> Tour Highlights
+                    </h4>
+                    <ul id="modalHighlights" class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <!-- Dynamic Highlights -->
+                    </ul>
+                </div>
+
+                <!-- Included Services -->
+                <div class="p-3.5 rounded-xl bg-ocean-50 border border-ocean-100">
+                    <h4 class="text-xs font-bold text-ocean-900 uppercase tracking-wider mb-1">What's Included</h4>
+                    <p id="modalIncluded" class="text-xs text-ocean-700"></p>
+                </div>
+            </div>
+
+            <!-- Modal Footer Action -->
+            <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between gap-4">
+                <button onclick="closeModal('packageModal')" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-xs font-bold hover:bg-slate-100">
+                    Close
+                </button>
+                <button onclick="proceedToBookingFromModal()" class="flex-1 py-2.5 bg-gradient-to-r from-emerald-600 to-ocean-600 hover:opacity-95 text-white text-xs font-bold rounded-xl shadow-md text-center">
+                    Book Package Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOKING FORM MODAL -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-white w-full sm:max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="px-6 py-4 bg-gradient-to-r from-ocean-700 to-emerald-700 text-white flex items-center justify-between">
+                <h3 class="font-bold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check"></i> Book Your Adventure
+                </h3>
+                <button onclick="closeModal('bookingModal')" class="text-white/80 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="confirmBooking(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Selected Package</label>
+                    <select id="bookingPackageSelect" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-ocean-500 focus:outline-none">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Travel Date</label>
+                        <input type="date" required class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-ocean-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Guests</label>
+                        <input type="number" min="1" max="15" value="2" required class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-ocean-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Full Name</label>
+                    <input type="text" placeholder="John Doe" required class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-ocean-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Phone Number</label>
+                    <input type="tel" placeholder="+1 234 567 890" required class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-ocean-500 focus:outline-none">
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-ocean-600 text-white font-bold text-sm rounded-xl shadow-md hover:opacity-95 transition-opacity">
+                        Confirm & Reserve Spot
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed top-20 right-4 z-50 hidden bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 transition-all duration-300 transform translate-y-[-10px]">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toastMsg" class="text-xs font-semibold"></span>
+    </div>
+
+    <!-- JAVASCRIPT: XML PARSING, ROUTING & INTERACTION LOGIC -->
+    <script>
+        // Global State storing parsed XML packages
+        let packagesData = [];
+        let selectedPackageForModal = null;
+        let activeCategoryFilter = 'all';
+
+        // Initialize App on DOM Load
+        window.addEventListener('DOMContentLoaded', () => {
+            parseXMLData();
+            renderPackages();
+            populateBookingDropdown();
+        });
+
+        // 1. XML DOM PARSER LOGIC
+        function parseXMLData() {
+            try {
+                const xmlString = document.getElementById('travel-xml').textContent;
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+                
+                const pkgElements = xmlDoc.getElementsByTagName('package');
+                packagesData = [];
+
+                for (let i = 0; i < pkgElements.length; i++) {
+                    const pkg = pkgElements[i];
+                    
+                    // Parse Highlights Sub-nodes
+                    const highlightItems = [];
+                    const hList = pkg.getElementsByTagName('highlights')[0]?.getElementsByTagName('item');
+                    if (hList) {
+                        for (let j = 0; j < hList.length; j++) {
+                            highlightItems.push(hList[j].textContent.trim());
+                        }
+                    }
+
+                    packagesData.push({
+                        id: pkg.getAttribute('id'),
+                        title: pkg.getElementsByTagName('title')[0]?.textContent || '',
+                        category: pkg.getElementsByTagName('category')[0]?.textContent || '',
+                        price: pkg.getElementsByTagName('price')[0]?.textContent || '0',
+                        currency: pkg.getElementsByTagName('price')[0]?.getAttribute('currency') || 'USD',
+                        duration: pkg.getElementsByTagName('duration')[0]?.textContent || '',
+                        rating: pkg.getElementsByTagName('rating')[0]?.textContent || '5.0',
+                        reviewsCount: pkg.getElementsByTagName('reviewsCount')[0]?.textContent || '0',
+                        badge: pkg.getElementsByTagName('badge')[0]?.textContent || '',
+                        image: pkg.getElementsByTagName('image')[0]?.textContent || '',
+                        description: pkg.getElementsByTagName('description')[0]?.textContent || '',
+                        highlights: highlightItems,
+                        included: pkg.getElementsByTagName('included')[0]?.textContent || ''
+                    });
+                }
+            } catch (err) {
+                console.error("XML Parsing Error:", err);
+                showToast("Failed to parse travel XML data.", "error");
+            }
+        }
+
+        // 2. RENDER PACKAGES TO DOM (Card View Structure)
+        function renderPackages() {
+            const container = document.getElementById('packagesContainer');
+            const searchVal = document.getElementById('searchInput')?.value.toLowerCase() || '';
+
+            // Filter logic
+            const filtered = packagesData.filter(pkg => {
+                const matchesCat = activeCategoryFilter === 'all' || pkg.category.toLowerCase().includes(activeCategoryFilter.toLowerCase());
+                const matchesSearch = pkg.title.toLowerCase().includes(searchVal) || pkg.description.toLowerCase().includes(searchVal);
+                return matchesCat && matchesSearch;
+            });
+
+            document.getElementById('packageCountTag').innerText = `${filtered.length} Packages Available`;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-200">
+                        <i class="fa-solid fa-compass-slash text-3xl mb-2"></i>
+                        <p class="text-sm">No matching packages found.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(pkg => `
+                <div class="glass-card rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+                    <!-- Card Media -->
+                    <div class="relative h-48 overflow-hidden bg-slate-100">
+                        <img src="${pkg.image}" alt="${pkg.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                        
+                        <!-- Top Badges -->
+                        <div class="absolute top-3 left-3 flex gap-2">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-emerald-600/90 text-white backdrop-blur-md shadow-sm">
+                                ${pkg.category}
+                            </span>
+                        </div>
+                        ${pkg.badge ? `
+                            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-400 text-slate-900 shadow-md">
+                                ${pkg.badge}
+                            </span>
+                        ` : ''}
+
+                        <!-- Price Tag overlay bottom right -->
+                        <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-lg text-right">
+                            <span class="text-xs text-slate-400 font-semibold block leading-none">Starting</span>
+                            <span class="text-lg font-extrabold text-ocean-700">${pkg.currency === 'USD' ? '$' : ''}${pkg.price}</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-1.5">
+                                <span class="flex items-center gap-1 text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> ${pkg.rating} (${pkg.reviewsCount})</span>
+                                <span>•</span>
+                                <span class="flex items-center gap-1 text-ocean-600"><i class="fa-solid fa-clock text-[10px]"></i> ${pkg.duration}</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-base leading-snug group-hover:text-ocean-700 transition-colors">
+                                ${pkg.title}
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+                                ${pkg.description}
+                            </p>
+                        </div>
+
+                        <!-- Highlights Tags -->
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            ${pkg.highlights.slice(0, 2).map(h => `
+                                <span class="text-[10px] font-medium px-2 py-1 rounded-md bg-slate-100 text-slate-600 flex items-center gap-1">
+                                    <i class="fa-solid fa-check text-emerald-600 text-[8px]"></i> ${h}
+                                </span>
+                            `).join('')}
+                        </div>
+
+                        <!-- Card Actions -->
+                        <div class="pt-2 border-t border-slate-100 flex items-center gap-2">
+                            <button onclick="openPackageModal('${pkg.id}')" class="flex-1 py-2.5 px-3 rounded-xl border border-ocean-500 text-ocean-700 hover:bg-ocean-50 text-xs font-bold transition-colors flex items-center justify-center gap-1.5">
+                                <span>View Package</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                            <button onclick="openBookingModal('${pkg.id}')" class="py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-md transition-colors">
+                                Book
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 3. INTERNAL ROUTER LOGIC (Address Bar Unchanged)
+        function switchTab(tabId) {
+            // Hide all views
+            document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden-view'));
+            
+            // Show active view
+            const activeView = document.getElementById(`view-${tabId}`);
+            if (activeView) activeView.classList.remove('hidden-view');
+
+            // Update Desktop Nav UI
+            ['home', 'about', 'contact'].forEach(t => {
+                const dtBtn = document.getElementById(`dt-nav-${t}`);
+                const mobBtn = document.getElementById(`mob-nav-${t}`);
+                
+                if (dtBtn) {
+                    if (t === tabId) {
+                        dtBtn.className = "px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-white/15 text-white shadow-sm";
+                    } else {
+                        dtBtn.className = "px-4 py-2 rounded-lg text-sm font-semibold transition-all text-white/80 hover:text-white hover:bg-white/10";
+                    }
+                }
+
+                if (mobBtn) {
+                    if (t === tabId) {
+                        mobBtn.className = "flex flex-col items-center gap-1 text-ocean-700 transition-colors";
+                    } else {
+                        mobBtn.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-ocean-700 transition-colors";
+                    }
+                }
+            });
+
+            // Scroll to top seamlessly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 4. FILTER HANDLERS
+        function filterPackages() {
+            renderPackages();
+        }
+
+        function setCategoryFilter(cat) {
+            activeCategoryFilter = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.innerText.toLowerCase().includes(cat.toLowerCase()) || (cat === 'all' && btn.innerText.includes('All'))) {
+                    btn.className = "cat-btn active text-xs font-semibold px-3 py-2 rounded-xl bg-white text-ocean-700 shadow-md transition-all whitespace-nowrap";
+                } else {
+                    btn.className = "cat-btn text-xs font-semibold px-3 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white backdrop-blur-md transition-all whitespace-nowrap";
+                }
+            });
+            renderPackages();
+        }
+
+        // 5. MODALS MANAGEMENT
+        function openPackageModal(pkgId) {
+            const pkg = packagesData.find(p => p.id === pkgId);
+            if (!pkg) return;
+            selectedPackageForModal = pkg;
+
+            document.getElementById('modalImg').src = pkg.image;
+            document.getElementById('modalCategory').innerText = pkg.category;
+            document.getElementById('modalBadge').innerText = pkg.badge || 'Featured';
+            document.getElementById('modalTitle').innerText = pkg.title;
+            document.getElementById('modalPrice').innerText = `$${pkg.price}`;
+            document.getElementById('modalRating').innerText = `${pkg.rating} (${pkg.reviewsCount} reviews)`;
+            document.getElementById('modalDuration').innerText = pkg.duration;
+            document.getElementById('modalDesc').innerText = pkg.description;
+            document.getElementById('modalIncluded').innerText = pkg.included;
+
+            const highlightsList = document.getElementById('modalHighlights');
+            highlightsList.innerHTML = pkg.highlights.map(h => `
+                <li class="flex items-start gap-2">
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5"></i>
+                    <span>${h}</span>
+                </li>
+            `).join('');
+
+            document.getElementById('packageModal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function populateBookingDropdown() {
+            const select = document.getElementById('bookingPackageSelect');
+            select.innerHTML = packagesData.map(p => `
+                <option value="${p.id}">${p.title} ($${p.price})</option>
+            `).join('');
+        }
+
+        function openBookingModal(pkgId = null) {
+            if (pkgId) {
+                document.getElementById('bookingPackageSelect').value = pkgId;
+            }
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+
+        function proceedToBookingFromModal() {
+            if (selectedPackageForModal) {
+                closeModal('packageModal');
+                openBookingModal(selectedPackageForModal.id);
+            }
+        }
+
+        function confirmBooking(e) {
+            e.preventDefault();
+            closeModal('bookingModal');
+            showToast("Booking requested successfully! Our tour representative will call you.", "success");
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showToast("Thank you! Your message has been sent.", "success");
+            e.target.reset();
+        }
+
+        // 6. TOAST NOTIFICATION UTILITY
+        function showToast(msg, type = "success") {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = msg;
+            if (type === "error") {
+                toastIcon.className = "fa-solid fa-circle-exclamation text-rose-400 text-lg";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400 text-lg";
+            }
+
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
